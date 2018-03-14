@@ -91,7 +91,7 @@
                            <div><a target="_blank" v-bind:href="item.image"><img v-bind:src="item.image" style="width:250px"></a>
                            </div>
                         </div>
-                        <h3>Grand Total: ${{ grandTotal }}</h3>
+                        <h3>{{ grandTotal }}</h3>
                      </div>
                   </section>
                </div>
@@ -149,7 +149,11 @@
       </section>
       <!-- Toggle Tabs -->
       <section class="toggle-tabs text-center">
-         <h3>Hacktiv Heights Collection </h3>
+        <br>
+        <hr>
+         <h3 style="font-family:monospace;">Hacktiv Heights Collection </h3>
+         <hr>
+         <br>
          <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#menu1">Three Bedroom</a></li>
             <li><a data-toggle="tab" href="#menu2">Four Bedroom</a></li>
@@ -378,7 +382,6 @@
             let id = 0;
             this.cart.forEach((v,i,a)=>{
               if(data.id === v.id){
-                console.log('heheheh')
                 counter +=1;
                 id = i-1;
                 }
@@ -392,14 +395,12 @@
             }
             counter = 0;
             console.log(this.cart);
-            // console.log(data);
           },
           removeFromCart: function(data){
             this.cart.forEach((v,i,a)=>{
               if(v.id === data.id){
                 this.cart.splice((i-1),2);
               }
-              console.log(this.cart)
             })
           }
         },
@@ -411,14 +412,18 @@
                 sum += v.totalPrice;
               }
             })
-            sum = sum*1000;
-            let parts = sum.toString().split(".");
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            return parts.join(".")
+            console.log(sum);
+            if(sum === 0){
+              return `Your shopping cart is empty!`
+            } else {
+              sum = sum*1000;
+              let parts = sum.toString().split(".");
+              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              return 'Grand Total: $'+ parts.join(".")
+            }
           },
           totalItems:function(){
             let sum = 0;
-            // console.log(this.cart)
             this.cart.forEach((v,i,a)=>{
               if(i%2 !== 0){
                 sum += v.quantity;
